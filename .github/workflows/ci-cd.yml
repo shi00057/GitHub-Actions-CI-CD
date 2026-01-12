@@ -51,8 +51,16 @@ jobs:
       - name: Package (skip tests)
         run: mvn -B -DskipTests package
 
-      - name: Create GitHub Release and upload jar
+      - name: List build outputs
+        run: |
+          echo "Ref: $GITHUB_REF"
+          ls -al
+          echo "---- target/ ----"
+          ls -al target || true
+
+      - name: Create GitHub Release and upload jar(s)
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            target/cicd-java21-demo-all.jar
+            target/*-all.jar
+            target/*.jar
